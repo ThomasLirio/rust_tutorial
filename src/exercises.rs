@@ -258,10 +258,6 @@ fn main() {
     println!("Vector Length {}", vec2.len());
     println!("Pop : {:?}", vec2.pop());
     */
-
-    
-
-   
 }
 
 /*
@@ -548,24 +544,365 @@ fn main() {
 */
 
 
+// Crates: Modules that produce a library or an executable
+// Modules: Organize and handle privacy
+// Packages:  Build, test and share crates
+// Path: A way of naming an item such as a struct or a  function 
+
+
 /*
 
+mod restaurant;
+use crate::restaurant::order_food;
 
+fn main() {
+
+    order_food();
+
+}
+
+*/
+
+/*
+fn main() {
+
+    panic!("Terrible Error");
+
+}
+
+Running `target\debug\rust_tutorial.exe`
+thread 'main' panicked at 'Terrible Error', src\main.rs:16:5
+stack backtrace:
+   0: std::panicking::begin_panic_handler
+             at /rustc/897e37553bba8b42751c67658967889d11ecd120/library\std\src\panicking.rs:584
+   1: core::panicking::panic_fmt
+             at /rustc/897e37553bba8b42751c67658967889d11ecd120/library\core\src\panicking.rs:142
+   2: rust_tutorial::main
+             at .\src\main.rs:16
+   3: core::ops::function::FnOnce::call_once<void (*)(),tuple$<> >
+             at /rustc/897e37553bba8b42751c67658967889d11ecd120\library\core\src\ops\function.rs:248
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+error: process didn't exit successfully: `target\debug\rust_tutorial.exe` (exit code: 101)
+*/
+
+/*
+fn main() {
+
+    let lil_arr = [1,2];
+    println!("{}", lil_arr[10]);
+
+}
+
+error: this operation will panic at runtime
+  --> src\main.rs:17:20
+   |
+17 |     println!("{}", lil_arr[10]);
+   |                    ^^^^^^^^^^^ index out of bounds: the length is 2 but the index is 10
+   |
+   = note: `#[deny(unconditional_panic)]` on by default
+
+error: could not compile `rust_tutorial` due to previous error
 
 */
 
 /*
 
+fn main() {
+
+    let path = "lines.txt" ;
+    let output = File::create(path);
+    //Result is an enum and has 2 variants  Ok and Err
+    // enum Result<T,E> {
+    //   Ok(T),
+    //   Err(E),
+    //}
+    // where T is the data typeof the value returned
+    // and E is the type of Error
+    let mut output = match output {
+        Ok(file) => file,
+        Err(error) => panic!("Problem creating file : {:?}" , error),
+
+    };
+    write!(output, "Just some\nrandom words").expect("Failed to write to the file");
+
+    let input = File::open(path).unwrap();
+    let buffered = BufReader::new(input);
+
+    for line in buffered.lines() {
+        println!("{}", line.unwrap());
+    }
+
+    let output2 = File::create("Rand.txt");
+    let  output2 = match output2 {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+                ErrorKind::NotFound => match File::create("Rand.txt"){
+                    Ok(fc) => fc,
+                    Err(e) => panic!("Can´t create file: {:?}", e),
+                },
+                _other_error => panic!("Problem openning the file: {:?}", error),
+        },
+    };
+
+}
+
+*/
+
+/*
+fn main() {
+
+    let mut arr_it = [1,2,3,4];
+    //val are borrowed, the collectio is still in memory, but values cannot be changed
+    for val in arr_it.iter(){
+        println!("{}", val);
+    }
+    //the collection is consumed but the collection will not be longer there to be used
+    //arr_it.into_iter();
+
+    let mut iter1 = arr_it.iter();
+    println!("1st value: {:?}", iter1.next());
+
+}
+
 */
 
 /*
 
+fn main() {
+
+    // Closure is a function without a name 
+    //and they are likely stored on a variable 
+    //and they can be used to pass a function into another function
+    // Closures can access variable outside their body
+    // let var_name = |parameters| -> return type {BODY}
+
+    let can_vote = |age: i32| { 
+        age>=18 
+    };
+    println!("Can vote: {}", can_vote(8));
+
+}
+ 
 */
 
 /*
 
+fn main() {
+
+   let mut samp1 =5;
+   let print_var = || println!("Sample 1: {}", samp1);
+   print_var();
+   samp1 = 10;
+   let mut change_var = || samp1 += 1;
+   change_var();
+   println!("Sample 1: {}", samp1);
+   samp1 = 10;
+   println!("Sample 1: {}", samp1);
+
+}
+
 */
 
 /*
+
+fn main() {
+
+   fn use_func<T> (a: i32, b: i32, func: T) -> i32
+   where T: Fn(i32, i32) -> i32 {
+        func(a,b)
+   } 
+
+   let sum = |a,b| a+b;
+   let product = |a,b| a*b;
+
+   println!(" 5 + 4 = {}", use_func(5, 4, sum));
+   println!(" 5 * 4 = {}", use_func(5, 4, product));
+
+}
+
+*/
+
+/*
+
+    // A pointer is an address to a location in memory
+    // Smart pointers is a pointer that besides it owns the data it has functions for manipulating that data,
+    // Smart pointers just provide functionality beyond referencing a specific location in mmemory 
+    // and they can be used to track the ownership of data
+    //    box smart pointer -- just stores data on the heap instead of the stack 
+    //    reference pointer
+    // reference operator & to borrow a value  rather then taking it and having it cleaned out of memory
+    // Strings and Vectors are also smart pointers
+    // BOX is normally going to be used when you have a large amount of data that is stored on the heap 
+    // and then you pass pointers to it on the stack
+    fn main() {
+    
+    let b_int = Box::new(10);
+    println!("b_int = {}", b_int);
+    
+    }
+
+*/
+
+
+/*
+
+fn main() {
+    
+    struct TreeNode<T> {
+        pub left: Option<Box<TreeNode<T>>>,
+        pub right: Option<Box<TreeNode<T>>>,
+        pub key: T,
+    }
+
+    impl<T> TreeNode<T>{
+        pub fn new(key: T) -> Self {
+            TreeNode { 
+                left: None, 
+                right: None,
+                key, 
+            }
+        }
+        pub fn left(mut self, node: TreeNode<T>) -> Self {
+            self.left = Some(Box::new(node));
+            self
+        }
+        pub fn right(mut self, node: TreeNode<T>) -> Self {
+            self.right = Some(Box::new(node));
+            self
+        }
+    }
+
+    let node1 = TreeNode::new(1)
+     .left(TreeNode::new(2))
+     .right(Treenode::new(3));
+
+}
+
+*/
+
+
+/*
+ 
+// A thread is going to handle the scheduling as well as the execution of the blocks of code that will run in parallel independently
+// common problems with parallel programing:
+//      threads are accessing data in the wrong order
+//      threads are blocked from executing because of confusion over requirements to proceed with the execution
+
+use std::thread;
+use std::time::Duration;
+
+
+
+fn main() {
+    
+    thread::spawn(|| {
+        for i in 1..25 {
+            println!("Spawned thread: {}", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..20 {
+        println!("Main thread: {}", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    //there are no guarantees on whenthreads will execute
+    // and if they will even complete execution 
+}
+
+*/
+
+
+/*
+use std::thread;
+use std::time::Duration;
+
+
+fn main() {
+    
+   let thread1 = thread::spawn(|| {
+        for i in 1..25 {
+            println!("Spawned thread: {}", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..20 {
+        println!("Main thread: {}", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    //there are no guarantees on whenthreads will execute
+    // and if they will even complete execution 
+
+    //to guarantee they execute till the end you have to join them
+    thread1.join().unwrap();
+
+}
+
+*/
+
+/*
+
+use std::thread;
+use std::time::Duration;
+
+fn main() {
+   
+    pub struct Bank{
+        balance: f32,
+    }
+
+    pub fn withdraw(the_bank: &mut Bank, amount: f32){
+        the_bank.balance -= amount;
+
+    }
+
+    let mut bank = Bank {balance: 100.0, };
+    withdraw(&mut bank,5.0);
+    println!("Balance: {}", bank.balance);
+
+    fn customer(the_bank: &mut Bank) {
+        withdraw(the_bank, 5.0);
+    }
+
+    thread::spawn(|| {
+        customer(&mut bank);
+    })
+    .join().unwrap();
+   
+}
+
+*/
+
+
+/*
+// A smart pointer will allow multiple owners and it will block access when needed
+//std::sync::Arc
+//Arc stands for Atomically referenced counted 
+//&Arc -- a pointer using this will be thread-safe referenced counting pointer
+//The type Arc<T> provides shared ownership of a value of type T, allocated in the heap. 
+//Invoking clone on Arc produces a new Arc instance, which points to the same allocation on the heap 
+//as the source Arc, while increasing a reference count. When the last Arc pointer to a given allocation is destroyed, 
+//the value stored in that allocation (often referred to as "inner value") is also dropped.
+
+
+//Mutex will block threads that are waiting for lock to be available
+*/
+/*
+
+
+*/
+/*
+
+
+*/
+/*
+
+
+*/
+/*
+
 
 */
