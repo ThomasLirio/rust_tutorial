@@ -402,6 +402,167 @@ this code will not generate an error
 */
 
 /*
+fn print_str(x: String) {
+    println! ("A string {}", x);
+}
+
+fn print_return_str(x: String) -> String {
+    println! ("A string {}", x);
+    x
+}
+
+fn change_string(name: &mut String) {
+    name.push_str(" is happy");
+    println!("Message:  {}", name);
+}
+
+fn main() {
+
+
+    let str1= String::from("World");
+    let str2 = str1.clone();
+    //print_str(str1);
+    let str3 = print_return_str(str1);
+    println!("str3 =  {}", str3);
+    //print_str(str3);
+    let mut str4 = String::from("Julio");
+    change_string(&mut str4);
+}
+ 
+
+*/
+
+
+/*
+use std::collections::HashMap;
+
+
+fn main() {
+
+    let mut heroes = HashMap::new();
+    heroes.insert("Superman", "Clark Kent");
+    heroes.insert("Batman", "Bruce Wayne");
+    heroes.insert("The Flash", "Barry Allen");
+
+    for (k,v) in heroes.iter() {
+        println!("{} = {}", k, v);
+    }
+
+    println!(" Length : {}", heroes.len());
+    
+    if heroes.contains_key(&"Batman") {
+        let the_batman = heroes.get(&"Batman");
+        match the_batman {
+            Some (x) => println!("Batman is a hero"),
+            None => println!("Batman is not a hero"),
+
+        }
+    }
+
+}
+
+*/
+
+
+/*
+fn main() {
+
+    struct Customer {
+        name: String,
+        address: String,
+        balance: f32
+     }
+
+    let mut zag = Customer {
+        name: String::from("Zag Guedes"),
+        address: String::from("354 Zag´s Street"),
+        balance: 569.00,
+    };
+    println!("Zag address {}", zag.address);
+    zag.address = String::from("Other Zag´s address");
+    println!("Zag address {}", zag.address);
+}
+ 
+
+*/
+
+
+/*
+
+fn main() {
+
+    struct Rectangle<T, U> {
+        length: T,
+        height: U,
+     }
+
+    let rec = Rectangle {
+        length: 4,
+        height: 10.5,
+    };
+}
+
+*/
+
+
+/*
+fn main() {
+
+    const PI: f32 = 3.141592;
+  
+    trait Shape{
+        fn new(length: f32, width: f32) -> Self;
+        fn area(&self) -> f32;
+    }
+
+    struct Rectangle {length: f32, width: f32};
+    struct Circle {length: f32, width: f32};
+
+    impl Shape for Rectangle {
+        fn new(length: f32, width: f32) -> Rectangle {
+            return Rectangle { length, width };
+        }
+
+        fn area(&self) -> f32 {
+            return &self.length * &self.width;
+        }
+    }
+     
+    impl Shape for Circle {
+        fn new(length: f32, width: f32) -> Circle {
+            return Circle { length, width };
+        }
+
+        fn area(&self) -> f32 {
+            return (&self.length/2.0).powf(2.0) * PI;
+        }
+    }
+
+    let rec: Rectangle = Shape::new(10.0, 10.0);
+    let circ: Circle = Shape::new(10.0, 10.0);
+
+    println!("Rec Area: {}", rec.area());
+    println!("Circ Area: {}", circ.area());
+   
+}
+*/
+
+
+/*
+
+
+
+*/
+
+/*
+
+*/
+
+/*
+
+*/
+
+/*
 
 */
 
